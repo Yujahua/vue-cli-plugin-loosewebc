@@ -1,19 +1,21 @@
-# vue-cli-plugin-build-looserwebc [![Windows Build status](https://ci.appveyor.com/api/projects/status/8cdonrkbg6m4k1tm/branch/master?svg=true)]()
+# vue-cli-plugin-build-loosewebc [![Windows Build status](https://ci.appveyor.com/api/projects/status/8cdonrkbg6m4k1tm/branch/master?svg=true)]()
 
 > vue cli plugin for Vue Web Components build
 
 **NOTE:** The master branch now hosts the code for v0.9.9! Release tag is [v1.0.0]().
 
-- [looserwebc Documentation](https://github.com/Yujahua/vue-cli-plugin-build-looserwebc/docs/looserwebc.md)
+- [loosewebc Documentation](https://github.com/Yujahua/vue-cli-plugin-build-loosewebc/docs/loosewebc.md)
 
 ## Install
 
-Via `@vue/cli` to create a project, annd then
+Via `@vue/cli` to create a project, and then
 
 runs
 
 ```
-vue add build-looserwebc
+vue add build-loosewebc
+
+build-loosewebc build
 ```
 
 ## Note
@@ -22,7 +24,7 @@ vue add build-looserwebc
 
 ## What is?
 
-`vue-cli-plugin-build-looserwebc` is a pulgin based [@vue-cli]() allows you to author Vue components in formate and output a wc lib called `Looser-Web-Coompoent(looserwc)`
+`vue-cli-plugin-build-loosewebc` is a pulgin based [@vue-cli]() allows you to author Vue components in formate and output a wc lib called `Looser-Web-Coompoent(looserwc)`
 
 Creating new files in the project with structure as same as your components library, output path may be `lib` or others as you config in `vue.config.js`.
 
@@ -46,4 +48,6 @@ If it doesn't work, you need to upgrade npm version, run `npm i -g npm`.Caused b
 
 and then the dependency `vue-loader-v16` cannot be created.
 
+
+## Alternative Name is called `async`, like vue-cli-plugin-asyncwebc
 
