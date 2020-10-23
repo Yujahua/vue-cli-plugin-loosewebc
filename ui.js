@@ -7,7 +7,7 @@ module.exports = api => {
         link: 'https://github.com/Yujahua/vue-cli-plugin-loosewebc#readme',
         files: {
             loosewebc: {
-                json: ['loosewebc.json']
+                js: ['loosewebc.js']
             }
         },
         // to show config via ui

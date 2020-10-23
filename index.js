@@ -16,11 +16,15 @@ module.exports = (api, options) => {
     api.configureWebpack(config => {   // todo after vue.cofing settings
         if (process.env.NODE_ENV === 'production') {
           // build for production...
+          console.dir(`production`)
           console.dir(config);
         } else {
           // config set for development...
+          console.dir(`development`)
+          console.dir(config);
         }
     })
+    console.dir(api)
 
     // Adding a new cli-service command
     api.registerCommand(
@@ -44,15 +48,35 @@ module.exports = (api, options) => {
             // add args:
             // -- target [outputPathName]
             if(args.target) {
-                console.log(`👋  ${args.target}`)
+                console.log(`[target]👋👋👋   ${args.target}`)
             }
             // -- origin [originPathName]
             if(args.origin) {
-                console.log(`👋👋  ${args.origin}`)
-            }else if(args["_"].length>0) {
-                console.log(`👋👋  ${args["_"].slice(-1)[0]}`)
+                console.log(`[origin]👋👋👋  ${args.origin}`)
             }else if(args.help) {
-                console.log(`This is a help`)
+                // to do help things
+                // show things
+                // like;
+                // Usage: npm <command>
+
+                // where <command> is one of:
+                //     access, adduser, audit, bin, bugs, c, cache, ci, cit,
+                //     clean-install, clean-install-test, completion, config,
+                //     create, ddp, dedupe, deprecate, dist-tag, docs, doctor,
+                //     edit, explore, fund, get, help, help-search, hook, i, init,
+                //     install, install-ci-test, install-test, it, link, list, ln,
+                //     login, logout, ls, org, outdated, owner, pack, ping, prefix,
+                //     profile, prune, publish, rb, rebuild, repo, restart, root,
+                //     run, run-script, s, se, search, set, shrinkwrap, star,
+                //     stars, start, stop, t, team, test, token, tst, un,
+                //     uninstall, unpublish, unstar, up, update, v, version, view,
+                //     whoami
+
+                // npm <command> -h  quick help on <command>
+                // npm -l            display full usage info
+                // npm help <term>   search for help on <term>
+                // npm help npm      involved overview
+                console.log(`[command] loosewebc --help`)
             }
         }
     )

@@ -18,7 +18,7 @@ module.exports = api => {
     api.extendPackage({
         dependencies: {},
         scripts: {
-            loosewebc: 'ue-cli-service loosewebc --target lib ./src/components/index.js'
+            loosewebc: 'vue-cli-service loosewebc --target lib --origin ./src/components/index.js'
         }
     })
 

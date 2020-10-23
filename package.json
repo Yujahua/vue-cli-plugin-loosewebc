@@ -1,7 +1,7 @@
 {
   "name": "vue-cli-plugin-loosewebc",
   "version": "0.9.9-beta.1",
-  "description": "vue-cli plugin to build a looser vue3 web components(webc) library (Maybe support 2.6.0+, if there's issues you've got, please let me know it.Thanks^) The release is v0.9.9-beta.1.",
+  "description": "vue cli plugin for loose Vue3 Web Components (webc) library build. The release is v0.9.9-beta.1.",
   "main": "index.js",
   "scripts": {
     "test": "loosewebc build"
