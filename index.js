@@ -29,8 +29,9 @@ module.exports = (api, options) => {
             description: 'Build a looser vue3 web components(webc) library',
             usage: 'vue-cli-service loosewebc [options] [entry]',
             options: {
-                '--target': 'specifies a output path for loosewebc',
-                '--origin': 'origin webc source path to be import and prebuild'
+                '--help': 'Shows options for plugin arguments',
+                '--target': 'Specifies a output path for loosewebc',
+                '--origin': 'Origin webc source path to be import and prebuild'
             }
         },
         args => {
@@ -50,6 +51,8 @@ module.exports = (api, options) => {
                 console.log(`👋👋  ${args.origin}`)
             }else if(args["_"].length>0) {
                 console.log(`👋👋  ${args["_"].slice(-1)[0]}`)
+            }else if(args.help) {
+                console.log(`This is a help`)
             }
         }
     )

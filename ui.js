@@ -1,10 +1,10 @@
 // Vue UI
 module.exports = api => {
     api.describeConfig({
-        id: 'org.yujahua.vue-build-loosewebc.config',
+        id: 'org.yujahua.vue-loosewebc.config',
         name: 'build configurationn',
         description: 'This config defines extra options of loosewebc build',
-        link: 'https://github.com/Yujahua/vue-cli-plugin-build-loosewebc#readme',
+        link: 'https://github.com/Yujahua/vue-cli-plugin-loosewebc#readme',
         files: {
             loosewebc: {
                 json: ['loosewebc.json']

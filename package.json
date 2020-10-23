@@ -1,24 +1,24 @@
 {
-  "name": "vue-cli-plugin-build-loosewebc",
+  "name": "vue-cli-plugin-loosewebc",
   "version": "0.9.9-beta.1",
   "description": "vue-cli plugin to build a looser vue3 web components(webc) library (Maybe support 2.6.0+, if there's issues you've got, please let me know it.Thanks^) The release is v0.9.9-beta.1.",
   "main": "index.js",
   "scripts": {
-    "test": "build-loosewebc build"
+    "test": "loosewebc build"
   },
   "keywords": [
-    "vue-cli-plugin-build-loosewebc",
+    "vue-cli-plugin-loosewebc",
     "vue3webcomponent",
     "webc"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:Yujahua/vue-cli-plugin-build-loosewebc.git"
+    "url": "git@github.com:Yujahua/vue-cli-plugin-loosewebc.git"
   },
   "bugs": {
-    "url": "https://github.com/Yujahua/vue-cli-plugin-build-loosewebc/issues"
+    "url": "https://github.com/Yujahua/vue-cli-plugin-loosewebc/issues"
   },
-  "homepage": "https://github.com/Yujahua/vue-cli-plugin-build-loosewebc#readme",
+  "homepage": "https://github.com/Yujahua/vue-cli-plugin-loosewebc#readme",
   "author": "yujahua",
   "license": "MIT"
 }
