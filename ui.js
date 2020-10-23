@@ -7,7 +7,7 @@ module.exports = api => {
         link: 'https://github.com/Yujahua/vue-cli-plugin-loosewebc#readme',
         files: {
             loosewebc: {
-                js: ['loosewebc.js']
+                json: ['loosewebc.json']
             }
         },
         // to show config via ui
@@ -16,10 +16,18 @@ module.exports = api => {
                 {
                     name: 'outputpath',
                     type: 'input',
-                    message: 'Define the output path for the new build web components',
+                    message: 'Define the root output path for build',
                     value: data.loosewebc && data.loosewebc.outputpath,
                     default: './lib',
-                }
+                },
+                {
+                    name: 'componentspath',
+                    type: 'input',
+                    message: 'Define the output path for web components build',
+                    value: data.loosewebc && data.loosewebc.outputpath,
+                    default: './components',
+                },
+                
             ]
         }),
         // set ui config , and write into the local file

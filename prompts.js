@@ -6,11 +6,10 @@ module.exports = pkg => {
     const prompts = [{
             type: 'input',
             name: 'pluginStart',
-            message: `This plugin will walk you through creating new output files which will format vue web components by umd with a loose way,
-            while keeping the structure as your components folders exists. Some options you must appoint, you may use commond below for help:\n
-            loosewebc --help\n
-            
-            Is this Clear? (yes) Clear`,
+            message: `This plugin will walk you through creating new output files which will format vue web components by umd with a loose way, while keeping the structure as your components folders exists.
+Some options you must appoint, you may use commond below for help:
+loosewebc --help
+Is this Clear? (yes) Clear`,
             validate: input => input ==='Clear'||input ==='clear'||input==='yes',
             default: ''
         }

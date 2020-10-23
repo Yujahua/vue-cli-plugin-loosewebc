@@ -1,0 +1,6 @@
+{
+    "config": {
+        "outputpath": "./lib",
+        "componentspath": "./components"
+    }
+}

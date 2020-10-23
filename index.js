@@ -7,31 +7,25 @@
 
 module.exports = (api, options) => {
 
-    api.chainWebpack(webpackConfig => {
-        console.log(`service webpackConfig: `)
-        console.log(webpackConfig)
-    })
-
     //Modifying configration for webpack
     api.configureWebpack(config => {   // todo after vue.cofing settings
+        console.log(`Enter config:`)
+        console.dir(config)
         if (process.env.NODE_ENV === 'production') {
           // build for production...
           console.dir(`production`)
-          console.dir(config);
         } else {
           // config set for development...
           console.dir(`development`)
-          console.dir(config);
         }
     })
-    console.dir(api)
 
     // Adding a new cli-service command
     api.registerCommand(
         'loosewebc',
         {
             description: 'Build a looser vue3 web components(webc) library',
-            usage: 'vue-cli-service loosewebc [options] [entry]',
+            usage: 'vue-cli-service loosewebc [options]',
             options: {
                 '--help': 'Shows options for plugin arguments',
                 '--target': 'Specifies a output path for loosewebc',
@@ -40,10 +34,6 @@ module.exports = (api, options) => {
         },
         args => {
             // Use genterator to create files structure by list traversal of the components folder
-            // to do
-
-            console.dir(`args`)
-            console.dir(args)
 
             // add args:
             // -- target [outputPathName]
@@ -76,7 +66,7 @@ module.exports = (api, options) => {
                 // npm -l            display full usage info
                 // npm help <term>   search for help on <term>
                 // npm help npm      involved overview
-                console.log(`[command] loosewebc --help`)
+                console.log(`[command]👋👋👋   loosewebc --help`)
             }
         }
     )
