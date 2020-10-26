@@ -6,19 +6,19 @@ const loosewebcconfig = require('./loosewebc.json')
 
 /**
  * maybe gentemplate named is not suitable,
- * use -like instead
+ * use *-like instead
  */
 const genTemplateLike = () => {
     console.log(`genntemplate or struncture:\n`)
     // read loosewebc local config
     fs.readFile("./loosewebc.json", 'utf8', (err, data) => {
-        if (err) {warn(`Cannot find project config 'looseweb.json', use plugin default instead.`);}
+        if (err) {warn(`Cannot find project config 'looseweb.json', use plugin default instead.`)}
 
         const webcConfig = readWebcConfig(data)
         const webcOutputPath = path.resolve("./", webcConfig.config.outputpath, webcConfig.config.componentspath)
 
         // just create dir folders of relative components path
-        makedir(webcOutputPath);
+        makedir(webcOutputPath)
     })
 }
 
@@ -41,7 +41,7 @@ const readWebcConfig = (data) => {
  * create folders and files as string path expect
  * @param {String} path current path
  */
-const makedir = async (path) => {
+const makedir = async(path) => {
 
     let pathStack = await pushItem(path)
 
@@ -56,11 +56,8 @@ const makedir = async (path) => {
 const warnPushRes = (pathStack) => {
     console.dir(`-- pathStack to be created as below: --`)
 
-    if(pathStack.length == 0) {
-        warn(`Dir folders has existed, none will be created`)
-    } else {
-        console.log(pathStack)
-    }
+    if(pathStack.length == 0) {warn(`Dir folders has existed, none will be created`)} 
+    else {console.log(pathStack)}
 
 }
 
@@ -72,7 +69,7 @@ const warnPushRes = (pathStack) => {
  */
 const pushItem = async (path, pathStack) => {
     // initial array, not exists path are collected for `pathStack`
-    pathStack = pathStack || [];
+    pathStack = pathStack || []
 
     const exists = await pathExists(path)
     if(!exists){
