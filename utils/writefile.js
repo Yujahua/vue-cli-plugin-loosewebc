@@ -1,40 +1,54 @@
-// Create a lib's output directory as web components' (webc) way that already exists.
-const { warn } = require('console')
 const fs = require('fs')
+const config = require('./config.json')
 const path = require('path')
-const loosewebcconfig = require('./loosewebc.json')
+const {warn} = require('console')
 
 /**
- * maybe gentemplate named is not suitable,
- * use *-like instead
+ * Write  into file as direct in config.json
+ * @param {string} fd 
  */
-const genTemplateLike = () => {
-    console.log(`genntemplate or struncture:\n`)
-    // read loosewebc local config
-    fs.readFile("./loosewebc.json", 'utf8', (err, data) => {
-        if (err) {warn(`Cannot find project config 'looseweb.json', use plugin default instead.`)}
+const towrite = async (fd) => {
+    const conf = readConfig();
+    const writePath = path.resolve(__dirname, conf.path)
 
-        const webcConfig = readWebcConfig(data)
-        const webcOutputPath = path.resolve("./", webcConfig.config.outputpath, webcConfig.config.componentspath)
+    await makeDir(writePath)
 
-        // just create dir folders of relative components path
-        makeDir(webcOutputPath)
-    })
+    // timestamp now only be supported
+    if(conf.fileStyle === "timestamp") {
+        let localpath = `${writePath}/${new Date().getTime()}.js`
+        writeFile(localpath, fd)
+    } else {
+        warn(`Cannot recognize the type '${conf.fileStyle}', check your config.json file for the type 'timestamp'`)
+    }
+    
+
 }
 
 /**
- * read the loosewebc.json, it maybe does not exist
+ * read the config.json, it maybe does not exist
  * and default one will repalce it.
  * @param {string object} data file data
  * @return {object}
  */
-const readWebcConfig = (data) => {
+const readConfig = (data) => {
 
     data = (data!= null && data != "{}" && Object.keys(data).length !=0)
      ? JSON.parse(data)
-     : loosewebcconfig
+     : config
 
     return data
+}
+
+/**
+ * Write into file as config.json define for type
+ * @param {string} path 
+ * @param {string} fd 
+ */
+const writeFile = (path, fd) => {
+
+    fs.writeFile(path, fd, () => {
+        console.log(`Write into file '${path}' success!`)
+    })
 }
 
 /**
@@ -130,5 +144,7 @@ const pathExists =  (path) => {
 }
 
 module.exports = {
-    install: genTemplateLike
+    towrite,
+    readConfig,
+    makeDir
 }

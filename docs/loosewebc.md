@@ -9,8 +9,8 @@
 |- README.md
 |- generator        # generator         (optional)
         |- index.js
-        |- gentemplate.js
-                    # template structure creation
+        |- gentemplate.js       # template structure creation
+        |- loosewebc.json       # config for loosewebc to locate
 |- index.js         # service plugin    (optional)
 |- package.json
 |- prompts.js       # prompt files      (optional)

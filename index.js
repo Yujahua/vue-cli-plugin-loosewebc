@@ -9,8 +9,6 @@ module.exports = (api, options) => {
 
     //Modifying configration for webpack
     api.configureWebpack(config => {   // todo after vue.cofing settings
-        console.log(`Enter config:`)
-        console.dir(config)
         if (process.env.NODE_ENV === 'production') {
           // build for production...
           console.dir(`production`)
@@ -68,8 +66,31 @@ module.exports = (api, options) => {
                 // npm help npm      involved overview
                 console.log(`[command]👋👋👋   loosewebc --help`)
             }
+
+            loadVueCli()
         }
     )
+
+}
+const loadVueCli = () => {
+    // define config for vue-cli
+    // local-vue-config
+    const localVueConfigOptions = {
+        outputDir: './lib/components'
+    }
+    const localCommand = {
+        scripts: {
+            "build:@csii/vx-mobile": "vue-cli-service build --target lib --name csii-vx-mobile ./src/components/index.js",
+            "build:@csii/vx-mobile-wc": "vue-cli-service build --target wc --name ~ ./src/components/index.js"
+        }
+    }
+
+    // Local plugins
+
+    // test for untils/writefile.js
+    const wf = require('./utils/writefile')
+
+    wf.towrite('123')
 
 }
 // Specifying mode for commands
