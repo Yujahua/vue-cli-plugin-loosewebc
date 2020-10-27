@@ -18,6 +18,14 @@ module.exports = (api, options) => {
         }
     })
 
+    // api.chainWebpack(config => {
+    //     config.module.rule('vue')
+    //             .test(/\.vue$/)
+    //               .use('vue-loader-v16')
+    //               .loader('vue-loader-v16')
+    //               .end()
+    // })
+
     // Adding a new cli-service command
     api.registerCommand(
         'loosewebc',
@@ -43,36 +51,25 @@ module.exports = (api, options) => {
                 console.log(`[origin]👋👋👋  ${args.origin}`)
             }else if(args.help) {
                 // to do help things
-                // show things
-                // like;
-                // Usage: npm <command>
+                // show things like;
+                // Usage: loosewebc <command>
 
                 // where <command> is one of:
-                //     access, adduser, audit, bin, bugs, c, cache, ci, cit,
-                //     clean-install, clean-install-test, completion, config,
-                //     create, ddp, dedupe, deprecate, dist-tag, docs, doctor,
-                //     edit, explore, fund, get, help, help-search, hook, i, init,
-                //     install, install-ci-test, install-test, it, link, list, ln,
-                //     login, logout, ls, org, outdated, owner, pack, ping, prefix,
-                //     profile, prune, publish, rb, rebuild, repo, restart, root,
-                //     run, run-script, s, se, search, set, shrinkwrap, star,
-                //     stars, start, stop, t, team, test, token, tst, un,
-                //     uninstall, unpublish, unstar, up, update, v, version, view,
+                //     --target, --origin, v, version,
                 //     whoami
 
-                // npm <command> -h  quick help on <command>
-                // npm -l            display full usage info
-                // npm help <term>   search for help on <term>
-                // npm help npm      involved overview
+                // loosewebc <command> -h  quick help on <command>
+                // loosewebc -l            display full usage info
+                // loosewebc help <term>   search for help on <term>
                 console.log(`[command]👋👋👋   loosewebc --help`)
             }
 
-            loadVueCli()
+            loadVueCli(options)
         }
     )
 
 }
-const loadVueCli = () => {
+const loadVueCli = (options) => {
     // define config for vue-cli
     // local-vue-config
     const localVueConfigOptions = {
@@ -88,12 +85,11 @@ const loadVueCli = () => {
     // Local plugins
 
     // test for untils/writefile.js
-    const wf = require('./utils/writefile')
-
-    wf.towrite('123')
-
+    // const wf = require('vue-cli-plugin-loosewebc/utils/writefile')
+    // wf.towrite
+    
 }
 // Specifying mode for commands
 module.exports.defaultModes = {
-    build: 'development'
+    build: 'production'
 }

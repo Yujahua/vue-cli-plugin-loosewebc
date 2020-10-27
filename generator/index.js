@@ -10,12 +10,15 @@
 
 module.exports = api => {
     // Gen template and files structrue
-    require('./gentemplate').install();
+    require('./gentemplate').install(api);
 
     // Extending package, create a new npm script or modify `package.json`
     api.extendPackage({
         scripts: {
             loosewebc: 'vue-cli-service loosewebc --target lib --origin ./src/components/index.js'
+        },
+        devDependencies: {
+            "glob": "^7.1.6"
         }
     })
 

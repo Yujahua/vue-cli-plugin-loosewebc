@@ -3,23 +3,77 @@ const { warn } = require('console')
 const fs = require('fs')
 const path = require('path')
 const loosewebcconfig = require('./loosewebc.json')
+const utils = require('../utils')
+const glob = require('../../loosewebc-test/node_modules/glob')
 
 /**
  * maybe gentemplate named is not suitable,
  * use *-like instead
  */
-const genTemplateLike = () => {
+const genTemplateLike = (api) => {
     console.log(`genntemplate or struncture:\n`)
     // read loosewebc local config
-    fs.readFile("./loosewebc.json", 'utf8', (err, data) => {
+    fs.readFile("./loosewebc.json", 'utf8', async (err, data) => {
         if (err) {warn(`Cannot find project config 'looseweb.json', use plugin default instead.`)}
 
-        const webcConfig = readWebcConfig(data)
-        const webcOutputPath = path.resolve("./", webcConfig.config.outputpath, webcConfig.config.componentspath)
-
+        const webcConfig = readWebcConfig(data).config
+        // api.resolve also works, is same to path.resolve('./', ...otherpaths)
+        const webcOutputPath = api.resolve(webcConfig.outputpath, webcConfig.componentspath)
+        const path = api.resolve(webcConfig.entrypath)
         // just create dir folders of relative components path
-        makeDir(webcOutputPath)
+        await makeDir(webcOutputPath)
+        // copy files from target components folder
+        // copyComponents(webcOutputPath, path)
+
+        // resolve export js of components
+        resolveComponents(path)
     })
+}
+
+/**
+ * copy components apponited from `origin` path to `target` path
+ * @param {String} target 
+ * @param {String} origin 
+ */
+const copyComponents = (target, origin) => {
+    const wf = require('../utils/writefile')
+    const readable = fs.createReadStream( path.resolve(origin, "index.js") );
+    const writable = fs.createWriteStream( path.resolve(target, "index.js") ); 
+    readable.pipe( writable );
+
+    // read `src/components` dir components files by index
+}
+
+/**
+ * resolve the components form entry js file
+ * // components source should format as: 
+    // ["/Users/yujiahua/GitHub/GitLab/loosewebc-test/src/components/_util/index.js", 
+    //  "/Users/yujiahua/GitHub/GitLab/loosewebc-test/src/components/action-bar/index.vue", 
+    //  "/Users/yujiahua/GitHub/GitLab/loosewebc-test/src/components/action-sheet/index.js"
+    //  ...
+    // ]
+ * @param {String} filepath 
+ */
+const resolveComponents = (filepath) => {
+    const pattern = `${filepath}/*/index.?(vue|js)`
+    glob(pattern, (err, files) => {
+        if(err) throw(err)
+
+        // set entries for build
+        const entries = setEntries(files)
+
+        // write into a file temporarily
+        utils.writefile.towrite(entries)
+    })
+}
+
+const setEntries = (files) => {
+    const entries_output = {}
+    files.map((value,index)=>{
+        const key = value.replace(/.*\/(.*)\/index.*/,'$1')
+        entries_output[key] = files[index]
+    })
+    return {entry:entries_output}
 }
 
 /**
@@ -56,7 +110,7 @@ const makeDir = async(path) => {
 const warnPushRes = (pathStack) => {
     console.dir(`-- pathStack to be created as below: --`)
 
-    if(pathStack.length == 0) {warn(`Dir folders has existed, none will be created`)} 
+    if(pathStack.length == 0) {warn(`Target dir has existed, none will be created`)} 
     else {console.log(pathStack)}
 
 }

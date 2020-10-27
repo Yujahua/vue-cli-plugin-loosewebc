@@ -4,18 +4,24 @@ const path = require('path')
 const {warn} = require('console')
 
 /**
- * Write  into file as direct in config.json
+ * Write `fd` into a file as the appoint in `config.json`
  * @param {string} fd 
  */
 const towrite = async (fd) => {
     const conf = readConfig();
     const writePath = path.resolve(__dirname, conf.path)
+    console.log(`towrite log here`)
 
     await makeDir(writePath)
 
     // timestamp now only be supported
     if(conf.fileStyle === "timestamp") {
         let localpath = `${writePath}/${new Date().getTime()}.js`
+
+        if(typeof fd === "object"){
+            fd = JSON.stringify(fd)
+        }
+
         writeFile(localpath, fd)
     } else {
         warn(`Cannot recognize the type '${conf.fileStyle}', check your config.json file for the type 'timestamp'`)
@@ -46,7 +52,8 @@ const readConfig = (data) => {
  */
 const writeFile = (path, fd) => {
 
-    fs.writeFile(path, fd, () => {
+    fs.writeFile(path, fd, (err) => {
+        if(err) throw(`Write into file but an err occur: ${err}`)
         console.log(`Write into file '${path}' success!`)
     })
 }
@@ -70,7 +77,7 @@ const makeDir = async(path) => {
 const warnPushRes = (pathStack) => {
     console.dir(`-- pathStack to be created as below: --`)
 
-    if(pathStack.length == 0) {warn(`Dir folders has existed, none will be created`)} 
+    if(pathStack.length == 0) {warn(`Target dir has existed, none will be created`)} 
     else {console.log(pathStack)}
 
 }
