@@ -54,7 +54,7 @@ module.exports = (api, options) => {
     // local-vue-config
  */
 const loadVueCli = () => {
-    const path = requir('path')
+    const path = require('path')
     const localVueConfigOptions = {
         outputDir: './lib/components'
     }
