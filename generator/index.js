@@ -8,9 +8,12 @@
 // - The generator options for this plugin
 // - The entire preset will be passed as the third argument
 
-module.exports = api => {
-    // Gen template and files structrue
-    require('./gentemplate').install(api);
+module.exports = async api => {
+    // Gen template and files structrue,
+    // for example, build targt output, copy components folder as they are before
+    const config = await require('./gentemplate').install(api);
+
+    // console.log(config)
 
     // Extending package, create a new npm script or modify `package.json`
     api.extendPackage({

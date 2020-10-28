@@ -6,26 +6,6 @@
 // - An object containing project local options specified in vue.config.js, or in the "vue" field in package.json
 
 module.exports = (api, options) => {
-
-    //Modifying configration for webpack
-    api.configureWebpack(config => {   // todo after vue.cofing settings
-        if (process.env.NODE_ENV === 'production') {
-          // build for production...
-          console.dir(`production`)
-        } else {
-          // config set for development...
-          console.dir(`development`)
-        }
-    })
-
-    // api.chainWebpack(config => {
-    //     config.module.rule('vue')
-    //             .test(/\.vue$/)
-    //               .use('vue-loader-v16')
-    //               .loader('vue-loader-v16')
-    //               .end()
-    // })
-
     // Adding a new cli-service command
     api.registerCommand(
         'loosewebc',
@@ -69,9 +49,12 @@ module.exports = (api, options) => {
     )
 
 }
-const loadVueCli = (options) => {
-    // define config for vue-cli
+/**
+ * // define config for vue-cli
     // local-vue-config
+ */
+const loadVueCli = () => {
+    const path = requir('path')
     const localVueConfigOptions = {
         outputDir: './lib/components'
     }
@@ -87,9 +70,44 @@ const loadVueCli = (options) => {
     // test for untils/writefile.js
     // const wf = require('vue-cli-plugin-loosewebc/utils/writefile')
     // wf.towrite
-    
+
+    const Service = require('../@vue/cli-service/lib/Service')
+    service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
+
+    const args = require('minimist')([],{
+        boolean: [
+          // build
+          'modern',
+          'report',
+          'report-json',
+          'inline-vue',
+          'watch',
+          // serve
+          'open',
+          'copy',
+          'https',
+          // inspect
+          'verbose'
+        ]
+      })
+
+      Object.assign(args,{
+        "entry":path,
+        "target":"lib",
+        "formats":"umd", // commonjs | umd | umd-min
+        "name": "Icon",
+        "filename": "Icon",
+        "dest": "lib/components"
+      })
+
+      console.log(args)
+    service.run('build', args, []).catch(err => {
+        error(err)
+        process.exit(1)
+      })
+
 }
 // Specifying mode for commands
 module.exports.defaultModes = {
-    build: 'production'
+    loosewebc: 'production'
 }
