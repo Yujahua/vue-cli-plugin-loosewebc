@@ -92,7 +92,7 @@ const loadVueCli = () => {
       })
 
       Object.assign(args,{
-        "entry":path,
+        "entry":path.resolve("src/components/index.js"),
         "target":"lib",
         "formats":"umd", // commonjs | umd | umd-min
         "name": "Icon",
@@ -100,7 +100,7 @@ const loadVueCli = () => {
         "dest": "lib/components"
       })
 
-      console.log(args)
+      console.log(path.resolve("src/components/index.js"))
     service.run('build', args, []).catch(err => {
         error(err)
         process.exit(1)
