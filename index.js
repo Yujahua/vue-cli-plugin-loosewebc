@@ -6,6 +6,21 @@
 // - An object containing project local options specified in vue.config.js, or in the "vue" field in package.json
 
 module.exports = (api, options) => {
+    
+    api.chainWebpack(webpackConfig => {
+        console.log(options)
+        if(options.outputDir === "lib"){
+        const path = require('path')
+        webpackConfig
+              .plugin('copy')
+                .use(require('copy-webpack-plugin'), [[{
+                  from: path.resolve("src/components"),
+                  to: path.resolve("lib/components"),
+                  toType: 'dir'
+                }]])
+        }
+    })
+
     // Adding a new cli-service command
     api.registerCommand(
         'loosewebc',
@@ -18,7 +33,7 @@ module.exports = (api, options) => {
                 '--origin': 'Origin webc source path to be import and prebuild'
             }
         },
-        args => {
+        async args => {
             // Use genterator to create files structure by list traversal of the components folder
 
             // add args:
@@ -43,35 +58,42 @@ module.exports = (api, options) => {
                 // loosewebc help <term>   search for help on <term>
                 console.log(`[command]👋👋👋   loosewebc --help`)
             }
+            // test for untils/writefile.js
+            // const wf = require('vue-cli-plugin-loosewebc/utils/writefile')
+            
+            const config = await require('./generator/gentemplate').install(api)
+            const modulesArray = config;
+            // wf.towrite(config)
 
-            loadVueCli(options)
+            for( modul in modulesArray){
+                const name = modul
+                const options = {
+                    entry: modulesArray[modul],
+                    target: 'lib',
+                    name: `${name[0].toUpperCase}${name.slice(1)}`,
+                    dest: `lib/lib/${name}`
+                }
+
+                // except _[name], cause it is inner fns, not export web components
+                if(modul[0]==="_"){
+                    continue
+                }
+
+                console.log(`\ncompile..\nname: ${name}\nresource: ${modulesArray[modul]}`)
+                loadVueCli(options)
+            }
+            
         }
     )
 
 }
 /**
- * // define config for vue-cli
-    // local-vue-config
+ * define config for vue-cli
+ * and load local-vue-config call cli Service
+ * @param options?
  */
-const loadVueCli = () => {
-    const path = require('path')
-    const localVueConfigOptions = {
-        outputDir: './lib/components'
-    }
-    const localCommand = {
-        scripts: {
-            "build:@csii/vx-mobile": "vue-cli-service build --target lib --name csii-vx-mobile ./src/components/index.js",
-            "build:@csii/vx-mobile-wc": "vue-cli-service build --target wc --name ~ ./src/components/index.js"
-        }
-    }
-
-    // Local plugins
-
-    // test for untils/writefile.js
-    // const wf = require('vue-cli-plugin-loosewebc/utils/writefile')
-    // wf.towrite
-
-    const Service = require('../@vue/cli-service/lib/Service')
+const loadVueCli = (options) => {
+    const Service = require('../@vue/cli-service/lib/Service.js')
     service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
 
     const args = require('minimist')([],{
@@ -92,17 +114,16 @@ const loadVueCli = () => {
       })
 
       Object.assign(args,{
-        "entry":path.resolve("src/components/index.js"),
-        "target":"lib",
-        "formats":"umd", // commonjs | umd | umd-min
-        "name": "Icon",
-        "filename": "Icon",
-        "dest": "lib/components"
+        "entry": options.entry,    // "entry":path.resolve("src/components/index.js"),
+        "target": options.target,    // "lib"
+        "formats": "umd-min",      // commonjs | umd | umd-min
+        "name": options.name,
+        "filename": 'index',
+        "dest": options.dest
       })
 
-      console.log(path.resolve("src/components/index.js"))
     service.run('build', args, []).catch(err => {
-        error(err)
+        if(err) throw(err)
         process.exit(1)
       })
 

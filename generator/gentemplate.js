@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const loosewebcconfig = require('./loosewebc.json')
 const utils = require('../utils')
-const glob = require('../../loosewebc-test/node_modules/glob')
+const glob = require('glob')
 
 /**
  * maybe gentemplate named is not suitable,
@@ -23,28 +23,22 @@ const genTemplateLike = (api) => {
             const webcOutputPath = api.resolve(webcConfig.outputpath, webcConfig.componentspath)
             const path = api.resolve(webcConfig.entrypath)
             // just create dir folders of relative components path
-            await makeDir(webcOutputPath)
+            // await makeDir(webcOutputPath)
 
             // resolve export js of components or components dir directly
-            const entries = await resolveComponentsEntry(path)
+            // const entries = await resolveComponentsEntry(path)
 
             // resolve outputs
-            const output = resolveComponentsOutput(webcConfig.outputpath)
+            // const output = resolveComponentsOutput(webcConfig.outputpath)
 
-            const entryNames = Object.keys(entries.entry)
+            // const entryNames = Object.keys(entries.entry)
 
             // copy files from target components folder
-            copyComponents(webcOutputPath, path, entryNames)
+            copyComponents(webcOutputPath, path)
 
             // loop webpack build
             // buildFile(entryNames)
-
-            const config =  {
-                entries,
-                output
-            }
-
-            resovle(config)
+            resovle(entries.entry)
 
         })
 
@@ -55,13 +49,13 @@ const genTemplateLike = (api) => {
  * copy components apponited from `origin` path to `target` path
  * @param {String} target 
  * @param {String} origin 
- * @param {Array} childeFolderName
  */
-const copyComponents = (target, origin, childeFolderName) => {
-    const wf = require('../utils/writefile')
-    // const readable = fs.createReadStream( path.resolve(origin, "index.js") );
-    // const writable = fs.createWriteStream( path.resolve(target, "index.js") ); 
-    // readable.pipe( writable );
+const copyComponents = (target, origin) => {
+    const copy = require('copy-webpack-plugin')
+    // const wf = require('../utils/writefile')
+    const readable = fs.createReadStream( path.resolve(origin, "index.js") );
+    const writable = fs.createWriteStream( path.resolve(target, "index.js") ); 
+    readable.pipe( writable );
 
     childeFolderName.map( async(value,index) => {
         if(String(value).length > 0 && value!=undefined){
@@ -156,6 +150,20 @@ const readWebcConfig = (data) => {
      : loosewebcconfig
 
     return data
+}
+
+/**
+ * current dir includes files, floder
+ */
+const scanDir = () => {
+    // todo
+}
+
+/**
+ * make file
+ */
+const makeFile = () => {
+    // todo
 }
 
 /**
