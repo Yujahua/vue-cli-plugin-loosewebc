@@ -3,7 +3,6 @@ const { warn } = require('console')
 const fs = require('fs')
 const path = require('path')
 const loosewebcconfig = require('./loosewebc.json')
-const utils = require('../utils')
 const glob = require('glob')
 
 /**
@@ -20,24 +19,23 @@ const genTemplateLike = (api) => {
 
             // api.resolve also works, is same to path.resolve('./', ...otherpaths)
             const webcConfig = readWebcConfig(data).config
-            const webcOutputPath = api.resolve(webcConfig.outputpath, webcConfig.componentspath)
             const path = api.resolve(webcConfig.entrypath)
             // just create dir folders of relative components path
+            // const webcOutputPath = api.resolve(webcConfig.outputpath, webcConfig.componentspath)
             // await makeDir(webcOutputPath)
 
             // resolve export js of components or components dir directly
-            // const entries = await resolveComponentsEntry(path)
-
-            // resolve outputs
-            // const output = resolveComponentsOutput(webcConfig.outputpath)
-
-            // const entryNames = Object.keys(entries.entry)
+            const entries = await resolveComponentsEntry(path)
 
             // copy files from target components folder
-            copyComponents(webcOutputPath, path)
+            // copyComponents(webcOutputPath, path)
 
             // loop webpack build
-            // buildFile(entryNames)
+            // const entryNames = Object.keys(entries.entry)
+            // resolve outputs
+            // const output = resolveComponentsOutput(webcConfig.outputpath)
+            // buildFile([...entryNames],[...output])
+
             resovle(entries.entry)
 
         })
@@ -52,12 +50,13 @@ const genTemplateLike = (api) => {
  */
 const copyComponents = (target, origin) => {
     const copy = require('copy-webpack-plugin')
+    // test:
     // const wf = require('../utils/writefile')
     const readable = fs.createReadStream( path.resolve(origin, "index.js") );
     const writable = fs.createWriteStream( path.resolve(target, "index.js") ); 
     readable.pipe( writable );
-
-    childeFolderName.map( async(value,index) => {
+    
+    childFolderName.map( async(value,index) => {
         if(String(value).length > 0 && value!=undefined){
             const path = `${target}/${value}`
             const exists = await pathExists(path)
@@ -99,8 +98,10 @@ const resolveComponentsEntry = (filepath) => {
     // webpack config directly if import vue.config.js configration
     const entries = setEntries(files)
 
-    // test: write into a file temporarily
-    // utils.writefile.towrite(entries)
+    // test: 
+    // write into a file temporarily
+    // const wf = require('../utils/writefile')
+    // wf.towrite(entries)
 
     return entries
 
@@ -144,7 +145,6 @@ const buildFile = (modules) => {
  * @return {object}
  */
 const readWebcConfig = (data) => {
-
     data = (data!= null && data != "{}" && Object.keys(data).length !=0)
      ? JSON.parse(data)
      : loosewebcconfig
@@ -153,16 +153,16 @@ const readWebcConfig = (data) => {
 }
 
 /**
- * current dir includes files, floder
+ * scan current dir includes files, floder
  */
-const scanDir = () => {
+const scanDir = (path) => {
     // todo
 }
 
 /**
  * make file
  */
-const makeFile = () => {
+const makeFile = (target, origin) => {
     // todo
 }
 

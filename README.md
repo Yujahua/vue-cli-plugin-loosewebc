@@ -56,3 +56,11 @@ and then the dependency `vue-loader-v16` cannot be created.
 
 ## Alternative Name is called `async`, like vue-cli-plugin-asyncwebc
 
+## inspect output via vue config
+```json
+{
+  "scripts": {
+    "output": "vue inspect > output.js"
+  }
+}
+```

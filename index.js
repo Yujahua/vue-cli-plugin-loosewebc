@@ -1,6 +1,8 @@
 // Service plugin serves for modifying webpack config
 // Service plugins are loaded automatically when a Service instance is created
 
+const { resolve } = require('path')
+
 // A service plugin should export a function which receives two arguments:
 // - A PluginAPI instance
 // - An object containing project local options specified in vue.config.js, or in the "vue" field in package.json
@@ -8,8 +10,11 @@
 module.exports = (api, options) => {
     
     api.chainWebpack(webpackConfig => {
-        console.log(options)
+
         if(options.outputDir === "lib"){
+        // log here
+        // it shows execute three times, for each library (commonjs,umd,umd-min) for 3
+        console.log(`webpck config plugin >>`)
         const path = require('path')
         webpackConfig
               .plugin('copy')
@@ -80,7 +85,7 @@ module.exports = (api, options) => {
                 }
 
                 console.log(`\ncompile..\nname: ${name}\nresource: ${modulesArray[modul]}`)
-                loadVueCli(options)
+                await loadVueCli(options)
             }
             
         }
@@ -93,6 +98,7 @@ module.exports = (api, options) => {
  * @param options?
  */
 const loadVueCli = (options) => {
+    return new Promise((resolve,reject) => {
     const Service = require('../@vue/cli-service/lib/Service.js')
     service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
 
@@ -126,6 +132,9 @@ const loadVueCli = (options) => {
         if(err) throw(err)
         process.exit(1)
       })
+      resolve()
+
+    })
 
 }
 // Specifying mode for commands
