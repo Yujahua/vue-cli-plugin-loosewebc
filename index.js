@@ -99,7 +99,7 @@ module.exports = (api, options) => {
  */
 const loadVueCli = (options) => {
     return new Promise((resolve,reject) => {
-    const Service = require('../@vue/cli-service/lib/Service.js')
+    const Service = require('@vue/cli-service/lib/Service.js')
     service = new Service(process.env.VUE_CLI_CONTEXT || process.cwd())
 
     const args = require('minimist')([],{
