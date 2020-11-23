@@ -14,19 +14,19 @@ module.exports = api => {
         onRead: ({data}) => ({
             prompts: [
                 {
+                    name: 'entrypath',
+                    type: 'input',
+                    message: 'Appoint the entry path for web components build',
+                    value: data.loosewebc && data.loosewebc.entrypath,
+                    default: './components',
+                },
+                {
                     name: 'outputpath',
                     type: 'input',
                     message: 'Define the root output path for build',
                     value: data.loosewebc && data.loosewebc.outputpath,
                     default: './lib',
-                },
-                {
-                    name: 'componentspath',
-                    type: 'input',
-                    message: 'Define the output path for web components build',
-                    value: data.loosewebc && data.loosewebc.outputpath,
-                    default: './components',
-                },
+                }
                 
             ]
         }),
@@ -36,7 +36,7 @@ module.exports = api => {
             for(const prompt of prompts) {
                 res[`${prompt.id}`] = await api.getAnswer(prompt.id)
             }
-            api.setData('loosewebc',res)
+            api.setData('loosewebc',{config: res})
         }
     })
 }

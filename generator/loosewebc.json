@@ -1,7 +1,6 @@
 {
     "config": {
         "outputpath": "./lib",
-        "entrypath": "./src/components",
-        "componentspath": "./lib"
+        "entrypath": "./components"
     }
 }

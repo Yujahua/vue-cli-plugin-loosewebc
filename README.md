@@ -2,7 +2,7 @@
 
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/8cdonrkbg6m4k1tm/branch/master?svg=true)]()
 
-> vue cli plugin for loose Vue3 Web Components (webc) library build,
+> vue cli plugin for loose Vue3 Web Components (webc) library build
 
 **NOTE:** 
 
@@ -24,6 +24,10 @@ runs
 vue add loosewebc
 
 loosewebc build
+or
+npm run loosewebc
+or
+npx vue-cli-service loosewebc
 ```
 
 ## What is?
@@ -47,7 +51,7 @@ As of v4.5.0, use `@vue/cli` built-in option to choose Vue 3 preset when creatin
   ``` 
 Ps: 
 
-If it doesn't work, you need to upgrade npm version, run `npm i -g npm`.Caused by cli command with older npm, it cannot understand the `@vue-cli` config:
+If it doesn't work, you need to upgrade npm version, run `npm i -g npm`. Cause by cli command with older npm, it cannot understand the `@vue-cli` config:
   
   `{"vue-loader-v16": "npm:vue-loader@^16.0.0-beta.3}`,
 
@@ -56,7 +60,7 @@ and then the dependency `vue-loader-v16` cannot be created.
 
 ## Alternative Name is called `async`, like vue-cli-plugin-asyncwebc
 
-## inspect output via vue config
+## Maybe useful to inspect output via vue config what's going on
 ```json
 {
   "scripts": {

@@ -1,8 +1,6 @@
 // Service plugin serves for modifying webpack config
 // Service plugins are loaded automatically when a Service instance is created
 
-const { resolve } = require('path')
-
 // A service plugin should export a function which receives two arguments:
 // - A PluginAPI instance
 // - An object containing project local options specified in vue.config.js, or in the "vue" field in package.json
@@ -14,12 +12,12 @@ module.exports = (api, options) => {
         if(options.outputDir === "lib"){
         // log here
         // it shows execute three times, for each library (commonjs,umd,umd-min) for 3
-        console.log(`webpck config plugin >>`)
+        // console.log(`webpck config plugin >>`)
         const path = require('path')
         webpackConfig
               .plugin('copy')
                 .use(require('copy-webpack-plugin'), [[{
-                  from: path.resolve("src/components"),
+                  from: path.resolve("components"),
                   to: path.resolve("lib/components"),
                   toType: 'dir'
                 }]])
@@ -79,7 +77,10 @@ module.exports = (api, options) => {
                     dest: `lib/lib/${name}`
                 }
 
+                // issue for temporary way to solve:
                 // except _[name], cause it is inner fns, not export web components
+                // still work to do, if resolve `components/index` file import content, 
+                // can solve this issue
                 if(modul[0]==="_"){
                     continue
                 }
@@ -133,7 +134,6 @@ const loadVueCli = (options) => {
         process.exit(1)
       })
       resolve()
-
     })
 
 }
