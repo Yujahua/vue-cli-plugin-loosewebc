@@ -20,5 +20,9 @@
   },
   "homepage": "https://github.com/Yujahua/vue-cli-plugin-loosewebc#readme",
   "author": "yujahua",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.1.1",
+    "glob": "^7.1.6"
+  }
 }

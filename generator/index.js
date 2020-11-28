@@ -24,8 +24,6 @@ module.exports = async (api) => {
             "loosewebc": 'vue-cli-service loosewebc --target lib --origin ./components/index.js',
         },
         devDependencies: {
-            "glob": "^7.1.6",
-            "copy-webpack-plugin": "^5.1.1",
             "webpack": "^4.0.0"
         }
     })
